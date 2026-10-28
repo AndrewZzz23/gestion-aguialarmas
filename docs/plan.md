@@ -14,13 +14,14 @@ Cada entregable va a ambiente de pruebas → 5 días hábiles de validación del
 - [x] Monorepo, CI, Docker local (SQL Server, Azurite, Mailpit)
 - [x] API base: Entidad con inactivación, auditoría automática, Cliente, Cuenta, Ruta
 - [x] Web y app base conectadas a `/api/estado`
-- [ ] Primer `dotnet build` y migración `Inicial` en el PC de Andrew
+- [x] Primer `dotnet build` y migración `Inicial` en el PC de Andrew
 - [ ] Cuenta de Azure del cliente (pendiente)
 
 ## Fase 1 — siguientes tareas
 - [ ] Cerrar los pendientes de [pendientes-fase-1.md](pendientes-fase-1.md) con el cliente
 - [ ] Modelo de datos completo en código (ver [modelo-datos.md](modelo-datos.md))
 - [ ] Autenticación y roles (WA-01, WA-02, WA-03): JWT emitido por la API
+- [x] Identidad visual y librería de componentes (web y app)
 - [ ] Bocetos ajustados: ruta, capacidades, inventario por bodegas, GPS por acción
 - [ ] Plantillas Excel de carga masiva (WA-32)
 

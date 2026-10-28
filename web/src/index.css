@@ -1,64 +1,135 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/montserrat";
+
+/*
+ * Identidad visual de Aguialarmas. Los valores salen de packages/shared/src/tema.ts:
+ * si cambias uno aquí, cámbialo allá también (la app usa ese archivo).
+ * Solo hay tema claro. Sin rojo en textos ni alertas: los errores van en naranja quemado (--destructive).
+ */
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Montserrat Variable', system-ui, sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+
+    /* Colores propios de Aguialarmas (clases bg-marca-negro, text-aviso, bg-exito-fondo…) */
+    --color-marca-negro: var(--marca-negro);
+    --color-marca-amarillo: var(--marca-amarillo);
+    --color-marca-amarillo-oscuro: var(--marca-amarillo-oscuro);
+    --color-aviso: var(--aviso);
+    --color-aviso-fondo: var(--aviso-fondo);
+    --color-exito: var(--exito);
+    --color-exito-fondo: var(--exito-fondo);
+    --color-info: var(--info);
+    --color-info-fondo: var(--info-fondo);
+    --color-peligro-fondo: var(--peligro-fondo);
+
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
 :root {
-  --azul-noche: #14243a;
-  --azul: #1f4e79;
-  --azul-claro: #8fb3d9;
-  --fondo: #f3f5f8;
-  --gris: #4a5563;
-  --borde: #dce3eb;
-  --aviso: #5c4a00;
-  font-family: Inter, system-ui, sans-serif;
-  color: var(--azul-noche);
-  background: var(--fondo);
+    --marca-negro: #141414;
+    --marca-amarillo: #FFD200;
+    --marca-amarillo-oscuro: #8A6D00;
+
+    --background: #F5F5F4;
+    --foreground: #1C1917;
+    --card: #FFFFFF;
+    --card-foreground: #1C1917;
+    --popover: #FFFFFF;
+    --popover-foreground: #1C1917;
+    /* Botón principal: amarillo de la marca con texto negro */
+    --primary: #FFD200;
+    --primary-foreground: #141414;
+    --secondary: #F0EFED;
+    --secondary-foreground: #1C1917;
+    --muted: #F0EFED;
+    --muted-foreground: #5C5853;
+    --accent: #FFF4BF;
+    --accent-foreground: #141414;
+    --destructive: #C2410C;
+    --border: #E2E0DC;
+    --input: #D6D3CE;
+    --ring: #8A6D00;
+
+    --peligro-fondo: #FFEDD5;
+    --aviso: #B45309;
+    --aviso-fondo: #FEF3C7;
+    --exito: #2F7D32;
+    --exito-fondo: #E8F5E9;
+    --info: #1F5F99;
+    --info-fondo: #E6F0FA;
+
+    --chart-1: #141414;
+    --chart-2: #FFD200;
+    --chart-3: #8A6D00;
+    --chart-4: #1F5F99;
+    --chart-5: #A8A29E;
+    --radius: 0.75rem;
+
+    /* Menú lateral negro, como la barra de la página de Aguialarmas */
+    --sidebar: #141414;
+    --sidebar-foreground: #E7E5E4;
+    --sidebar-primary: #FFD200;
+    --sidebar-primary-foreground: #141414;
+    --sidebar-accent: #262626;
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: #262626;
+    --sidebar-ring: #FFD200;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: var(--fondo);
-}
-
-.barra {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 24px;
-  background: var(--azul-noche);
-  color: var(--fondo);
-}
-
-.az {
-  border: 2px solid var(--azul-claro);
-  color: var(--azul-claro);
-  border-radius: 6px;
-  padding: 2px 6px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.marca {
-  font-weight: 600;
-}
-
-.contenido {
-  padding: 24px;
-}
-
-.tarjeta {
-  background: #fff;
-  border: 1px solid var(--borde);
-  border-radius: 12px;
-  padding: 24px;
-  max-width: 640px;
-}
-
-.tarjeta h1 {
-  margin-top: 0;
-  font-size: 22px;
-}
-
-.aviso {
-  color: var(--aviso);
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1, h2, h3 {
+    @apply font-heading font-bold tracking-tight;
+  }
 }
