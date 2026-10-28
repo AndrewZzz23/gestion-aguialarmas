@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/lib/api";
 import { MapaRutas, type Borrador } from "./MapaRutas";
+import { recortarContraVecinas } from "./recortar";
 
 type Modo =
   | { tipo: "ver" }
@@ -64,6 +65,46 @@ export function PaginaRutas() {
   function siguienteColor() {
     const usados = new Set(lista.map((r) => r.color.toUpperCase()));
     return coloresRutas.find((c) => !usados.has(c)) ?? coloresRutas[lista.length % coloresRutas.length];
+  }
+
+  /** Recorta la ruta contra sus vecinas y avisa qué pasó. Devuelve null si no se puede usar la forma. */
+  function ajustarForma(area: Punto[], idPropio: string | null): { area: Punto[]; cambio: boolean } | null {
+    const resultado = recortarContraVecinas(area, lista.filter((r) => r.id !== idPropio));
+    const nombres = (vecinas: string[]) => vecinas.map((v) => `"${v}"`).join(" y ");
+
+    switch (resultado.tipo) {
+      case "igual":
+        return { area, cambio: false };
+      case "recortada":
+        toast.info(`Se ajustó el borde para no pisar ${nombres(resultado.vecinas)}.`);
+        if (resultado.partesDescartadas > 0) {
+          toast.warning("La ruta atravesaba otra de lado a lado: se dejó solo la parte más grande.");
+        }
+        return { area: resultado.area, cambio: true };
+      case "dentro":
+        toast.warning(`La ruta queda completamente dentro de ${nombres(resultado.vecinas)}. Dibújala por fuera.`);
+        return null;
+      case "rodea":
+        toast.warning(`La ruta encierra por completo a ${nombres(resultado.vecinas)}. Una ruta no puede rodear a otra.`);
+        return null;
+    }
+  }
+
+  function alDibujar(area: Punto[]) {
+    const ajuste = ajustarForma(area, null);
+    if (!ajuste) return; // Sigue en modo dibujo para intentarlo de nuevo.
+    setModo({ tipo: "formulario", id: null, clave: crypto.randomUUID(), nombre: "", color: siguienteColor(), area: ajuste.area });
+  }
+
+  function alEditarForma(area: Punto[]) {
+    if (modo.tipo !== "formulario") return;
+    const ajuste = ajustarForma(area, modo.id);
+    if (!ajuste) {
+      // Se vuelve a la forma anterior; la clave nueva redibuja la capa editable.
+      setModo({ ...modo, clave: crypto.randomUUID() });
+      return;
+    }
+    setModo({ ...modo, area: ajuste.area, clave: ajuste.cambio ? crypto.randomUUID() : modo.clave });
   }
 
   function editar(ruta: Ruta) {
@@ -214,10 +255,8 @@ export function PaginaRutas() {
           dibujando={modo.tipo === "dibujar"}
           borrador={borrador}
           onSeleccionar={(id) => modo.tipo === "ver" && setSeleccionadaId(id)}
-          onDibujada={(area) =>
-            setModo({ tipo: "formulario", id: null, clave: crypto.randomUUID(), nombre: "", color: siguienteColor(), area })
-          }
-          onBorradorCambiado={(area) => setModo((m) => (m.tipo === "formulario" ? { ...m, area } : m))}
+          onDibujada={alDibujar}
+          onBorradorCambiado={alEditarForma}
         />
       </div>
 
