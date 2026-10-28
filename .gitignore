@@ -1,0 +1,35 @@
+# Node
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+.pnpm-store/
+
+# Expo / React Native
+mobile/.expo/
+mobile/android/
+mobile/ios/
+*.jks
+*.keystore
+google-services.json
+
+# .NET
+api/**/bin/
+api/**/obj/
+api/**/*.user
+.vs/
+*.swp
+
+# Secretos y configuración local
+.env
+.env.*
+!.env.example
+api/src/Aguialarmas.Api/appsettings.Development.local.json
+
+# Datos de contenedores
+docker/data/
+
+# Sistema
+.DS_Store
+Thumbs.db
+.idea/

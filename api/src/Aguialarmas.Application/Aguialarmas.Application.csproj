@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Aguialarmas.Domain\Aguialarmas.Domain.csproj" />
+  </ItemGroup>
+</Project>

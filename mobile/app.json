@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "Aguialarmas Técnicos",
+    "slug": "aguialarmas-tecnicos",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "co.aguialarmas.tecnicos"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F3F5F8",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "co.aguialarmas.tecnicos",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA"
+      ],
+      "blockedPermissions": [
+        "android.permission.ACCESS_BACKGROUND_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "aguialarmas",
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Aguialarmas usa tu ubicación solo cuando marcas una acción (llegada, inicio, pausa, cierre).",
+          "isAndroidBackgroundLocationEnabled": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Aguialarmas usa la cámara para las fotos de evidencia de la orden.",
+          "photosPermission": "Aguialarmas usa tus fotos para adjuntar evidencias a la orden."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#1F4E79"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

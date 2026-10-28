@@ -1,0 +1,19 @@
+{
+  "name": "aguialarmas",
+  "private": true,
+  "description": "Sistema de gestión de órdenes de trabajo, técnicos e inventario para Aguialarmas LTDA.",
+  "packageManager": "pnpm@10.18.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @aguialarmas/web dev",
+    "dev:mobile": "pnpm --filter @aguialarmas/mobile start",
+    "build:web": "pnpm --filter @aguialarmas/web build",
+    "build:shared": "pnpm --filter @aguialarmas/shared build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "infra:up": "docker compose -f docker/docker-compose.yml up -d",
+    "infra:down": "docker compose -f docker/docker-compose.yml down"
+  }
+}

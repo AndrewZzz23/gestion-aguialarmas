@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Aguialarmas.Domain/Aguialarmas.Domain.csproj" />
+    <Project Path="src/Aguialarmas.Application/Aguialarmas.Application.csproj" />
+    <Project Path="src/Aguialarmas.Infrastructure/Aguialarmas.Infrastructure.csproj" />
+    <Project Path="src/Aguialarmas.Api/Aguialarmas.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Aguialarmas.Domain.Tests/Aguialarmas.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,64 @@
+:root {
+  --azul-noche: #14243a;
+  --azul: #1f4e79;
+  --azul-claro: #8fb3d9;
+  --fondo: #f3f5f8;
+  --gris: #4a5563;
+  --borde: #dce3eb;
+  --aviso: #5c4a00;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--azul-noche);
+  background: var(--fondo);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: var(--azul-noche);
+  color: var(--fondo);
+}
+
+.az {
+  border: 2px solid var(--azul-claro);
+  color: var(--azul-claro);
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.marca {
+  font-weight: 600;
+}
+
+.contenido {
+  padding: 24px;
+}
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 640px;
+}
+
+.tarjeta h1 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.aviso {
+  color: var(--aviso);
+}
