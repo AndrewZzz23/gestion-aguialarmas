@@ -39,6 +39,18 @@ export const colores = {
   infoFondo: "#E6F0FA",
 } as const;
 
+/** Colores para distinguir las rutas en el mapa (WA-28). Sin rojo, para no confundirlas con alertas. */
+export const coloresRutas = [
+  "#FFD200",
+  "#141414",
+  "#1F5F99",
+  "#2F7D32",
+  "#B45309",
+  "#7C3AED",
+  "#0E7490",
+  "#BE185D",
+] as const;
+
 export const tipografia = {
   familia: "Montserrat",
   pesos: { normal: 400, medio: 500, seminegrilla: 600, negrilla: 700 },

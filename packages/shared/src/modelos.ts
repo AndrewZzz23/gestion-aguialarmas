@@ -37,12 +37,26 @@ export const TipoMarcacion = z.enum([
 ]);
 export type TipoMarcacion = z.infer<typeof TipoMarcacion>;
 
+/** Punto [longitud, latitud], en el mismo orden que GeoJSON. */
+export const Punto = z.tuple([z.number(), z.number()]);
+export type Punto = z.infer<typeof Punto>;
+
+/** Área de la ciudad dibujada en el mapa (WA-28). */
 export const Ruta = z.object({
   id: z.uuid(),
   nombre: z.string(),
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
+  /** Anillo exterior del polígono. */
+  area: z.array(Punto),
 });
 export type Ruta = z.infer<typeof Ruta>;
+
+export const GuardarRuta = z.object({
+  nombre: z.string().trim().min(1, "Escribe el nombre de la ruta").max(100),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Elige un color"),
+  area: z.array(Punto).min(3, "Dibuja al menos 3 puntos"),
+});
+export type GuardarRuta = z.infer<typeof GuardarRuta>;
 
 export const EstadoApi = z.object({
   sistema: z.string(),

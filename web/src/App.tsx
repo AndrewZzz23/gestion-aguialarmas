@@ -4,6 +4,7 @@ import { Marca } from "@/components/marca/Marca";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GuiaEstilos } from "@/modulos/estilos/GuiaEstilos";
+import { PaginaRutas } from "@/modulos/rutas/PaginaRutas";
 import { api } from "./lib/api";
 
 function Inicio() {
@@ -55,12 +56,14 @@ export default function App() {
         <Marca />
         <nav className="flex gap-6 text-sm font-medium">
           <EnlaceBarra to="/">Inicio</EnlaceBarra>
+          <EnlaceBarra to="/rutas">Rutas</EnlaceBarra>
           <EnlaceBarra to="/estilos">Estilos</EnlaceBarra>
         </nav>
       </header>
-      <main className="mx-auto max-w-6xl p-6">
+      <main className="mx-auto max-w-[96rem] p-6">
         <Routes>
           <Route path="/" element={<Inicio />} />
+          <Route path="/rutas" element={<PaginaRutas />} />
           <Route path="/estilos" element={<GuiaEstilos />} />
         </Routes>
       </main>
