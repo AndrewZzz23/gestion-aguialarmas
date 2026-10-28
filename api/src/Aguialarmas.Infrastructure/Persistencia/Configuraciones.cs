@@ -2,6 +2,7 @@ using Aguialarmas.Domain.Auditoria;
 using Aguialarmas.Domain.Clientes;
 using Aguialarmas.Domain.Comun;
 using Aguialarmas.Domain.Rutas;
+using Aguialarmas.Domain.Seguridad;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -57,6 +58,36 @@ internal sealed class RutaConfig : IEntityTypeConfiguration<Ruta>
         b.Property(x => x.Color).HasMaxLength(7).IsRequired();
         // geometry evita los problemas de orientación de anillos de geography; para una ciudad la precisión sobra.
         b.Property(x => x.Area).HasColumnType("geometry").IsRequired();
+    }
+}
+
+internal sealed class UsuarioConfig : IEntityTypeConfiguration<Usuario>
+{
+    public void Configure(EntityTypeBuilder<Usuario> b)
+    {
+        b.ToTable("Usuarios");
+        b.ConfigurarEntidad();
+        b.Property(x => x.Nombre).HasMaxLength(150).IsRequired();
+        b.Property(x => x.Correo).HasMaxLength(200).IsRequired();
+        b.HasIndex(x => x.Correo).IsUnique();
+        b.Property(x => x.Rol).HasConversion<string>().HasMaxLength(30);
+        b.Property(x => x.HashContrasena).HasMaxLength(200);
+        b.Property(x => x.HashTokenContrasena).HasMaxLength(100);
+    }
+}
+
+internal sealed class SesionUsuarioConfig : IEntityTypeConfiguration<SesionUsuario>
+{
+    public void Configure(EntityTypeBuilder<SesionUsuario> b)
+    {
+        b.ToTable("SesionesUsuario");
+        b.HasKey(x => x.Id);
+        b.Property(x => x.Id).ValueGeneratedNever();
+        b.Property(x => x.HashToken).HasMaxLength(100).IsRequired();
+        b.HasIndex(x => x.HashToken).IsUnique();
+        b.Property(x => x.Dispositivo).HasMaxLength(200);
+        b.HasIndex(x => x.UsuarioId);
+        b.HasOne<Usuario>().WithMany().HasForeignKey(x => x.UsuarioId).OnDelete(DeleteBehavior.Restrict);
     }
 }
 

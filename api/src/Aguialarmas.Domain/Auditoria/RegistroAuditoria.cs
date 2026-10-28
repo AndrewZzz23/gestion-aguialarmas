@@ -38,4 +38,6 @@ public enum AccionAuditoria
     Modificar = 2,
     Inactivar = 3,
     Reactivar = 4,
+    IniciarSesion = 5,
+    CerrarSesion = 6,
 }

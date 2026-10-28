@@ -22,6 +22,7 @@ Reglas aún sin definir por el cliente: `docs/pendientes-fase-1.md`. Si un requi
 - Vocabulario del dominio en español y como en `docs/glosario.md`. "Ruta" = área de la ciudad (antes "sector"). "Zona" = zona de la instalación de una cuenta.
 - Coordenadas: WGS84 (SRID 4326). En NetTopologySuite y GeoJSON va longitud primero.
 - Lo que no está en `docs/requisitos.md` es cambio de alcance: no lo agregues por iniciativa propia.
+- Todo endpoint exige sesión por defecto. Para un permiso nuevo: agrégalo en `api/src/Aguialarmas.Api/Seguridad/Permisos.cs` (manda) y en `packages/shared/src/permisos.ts` (solo muestra u oculta en web y app). Datos sensibles de una entidad: `[DatoSensible]` para que no lleguen a la auditoría.
 
 ## Convenciones
 - C#: espacios de nombres por archivo, `Nullable` activo, constructores primarios, una entidad por archivo en `Domain/<Modulo>/`.

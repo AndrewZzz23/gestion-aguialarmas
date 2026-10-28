@@ -64,3 +64,47 @@ export const EstadoApi = z.object({
   horaUtc: z.string(),
 });
 export type EstadoApi = z.infer<typeof EstadoApi>;
+
+/** Usuario del sistema (WA-02). */
+export const Usuario = z.object({
+  id: z.uuid(),
+  nombre: z.string(),
+  correo: z.string(),
+  rol: Rol,
+  activo: z.boolean(),
+  /** False mientras la persona no haya usado el enlace del correo para crear su contraseña. */
+  contrasenaDefinida: z.boolean(),
+  bloqueado: z.boolean(),
+});
+export type Usuario = z.infer<typeof Usuario>;
+
+export const GuardarUsuario = z.object({
+  nombre: z.string().trim().min(1, "Escribe el nombre").max(150),
+  correo: z.email("El correo no es válido").trim(),
+  rol: Rol,
+});
+export type GuardarUsuario = z.infer<typeof GuardarUsuario>;
+
+export const Sesion = z.object({
+  tokenAcceso: z.string(),
+  expiraUtc: z.string(),
+  tokenRenovacion: z.string(),
+  usuario: Usuario,
+});
+export type Sesion = z.infer<typeof Sesion>;
+
+/** Mismo criterio que Usuario.ValidarContrasena en la API. */
+export const Contrasena = z
+  .string()
+  .min(8, "Mínimo 8 caracteres")
+  .regex(/\p{L}/u, "Debe tener al menos una letra")
+  .regex(/\d/, "Debe tener al menos un número");
+
+export const nombresRol: Record<Rol, string> = {
+  Administrador: "Administrador",
+  UsuarioAdministrativo: "Usuario administrativo",
+  DirectorTecnico: "Director técnico",
+  Almacenista: "Almacenista",
+  Tecnico: "Técnico",
+  Supervisor: "Supervisor",
+};

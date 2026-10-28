@@ -1,6 +1,7 @@
 using Aguialarmas.Domain.Auditoria;
 using Aguialarmas.Domain.Clientes;
 using Aguialarmas.Domain.Rutas;
+using Aguialarmas.Domain.Seguridad;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aguialarmas.Infrastructure.Persistencia;
@@ -10,6 +11,8 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<Cliente> Clientes => Set<Cliente>();
     public DbSet<Cuenta> Cuentas => Set<Cuenta>();
     public DbSet<Ruta> Rutas => Set<Ruta>();
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<SesionUsuario> Sesiones => Set<SesionUsuario>();
     public DbSet<RegistroAuditoria> Auditoria => Set<RegistroAuditoria>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

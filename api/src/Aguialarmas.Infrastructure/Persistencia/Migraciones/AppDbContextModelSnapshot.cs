@@ -221,6 +221,107 @@ namespace Aguialarmas.Infrastructure.Persistencia.Migraciones
                     b.ToTable("Rutas", (string)null);
                 });
 
+            modelBuilder.Entity("Aguialarmas.Domain.Seguridad.SesionUsuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreadaUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dispositivo")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("ExpiraUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HashToken")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("RevocadaUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HashToken")
+                        .IsUnique();
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("SesionesUsuario", (string)null);
+                });
+
+            modelBuilder.Entity("Aguialarmas.Domain.Seguridad.Usuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("BloqueadoHastaUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("CreadoEn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreadoPor")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("HashContrasena")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("HashTokenContrasena")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("IntentosFallidos")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModificadoEn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModificadoPor")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("TokenContrasenaExpiraUtc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Activo");
+
+                    b.HasIndex("Correo")
+                        .IsUnique();
+
+                    b.ToTable("Usuarios", (string)null);
+                });
+
             modelBuilder.Entity("Aguialarmas.Domain.Clientes.Cuenta", b =>
                 {
                     b.HasOne("Aguialarmas.Domain.Clientes.Cliente", null)
@@ -233,6 +334,15 @@ namespace Aguialarmas.Infrastructure.Persistencia.Migraciones
                         .WithMany()
                         .HasForeignKey("RutaId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Aguialarmas.Domain.Seguridad.SesionUsuario", b =>
+                {
+                    b.HasOne("Aguialarmas.Domain.Seguridad.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Aguialarmas.Domain.Clientes.Cliente", b =>

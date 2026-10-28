@@ -1,3 +1,4 @@
+using Aguialarmas.Api.Seguridad;
 using Aguialarmas.Domain.Comun;
 using Aguialarmas.Domain.Rutas;
 using Aguialarmas.Infrastructure.Persistencia;
@@ -18,7 +19,7 @@ public static class RutasEndpoints
 
     public static void MapRutas(this IEndpointRouteBuilder app)
     {
-        var grupo = app.MapGroup("/api/rutas").WithTags("Rutas");
+        var grupo = app.MapGroup("/api/rutas").WithTags("Rutas").RequireAuthorization(Permisos.VerRutas);
 
         grupo.MapGet("/", async (AppDbContext db, CancellationToken ct) =>
         {
@@ -34,7 +35,7 @@ public static class RutasEndpoints
             await ReasignarCuentas(db, ruta, ct);
             await db.SaveChangesAsync(ct);
             return Results.Created($"/api/rutas/{ruta.Id}", ADto(ruta));
-        });
+        }).RequireAuthorization(Permisos.GestionarRutas);
 
         grupo.MapPut("/{id:guid}", async (Guid id, GuardarRutaDto datos, AppDbContext db, CancellationToken ct) =>
         {
@@ -50,7 +51,7 @@ public static class RutasEndpoints
             await ReasignarCuentas(db, ruta, ct);
             await db.SaveChangesAsync(ct);
             return Results.Ok(ADto(ruta));
-        });
+        }).RequireAuthorization(Permisos.GestionarRutas);
 
         // No hay DELETE: en este sistema nada se borra, se inactiva.
         grupo.MapPost("/{id:guid}/inactivar", async (Guid id, AppDbContext db, CancellationToken ct) =>
@@ -65,7 +66,7 @@ public static class RutasEndpoints
             await db.Cuentas.Where(c => c.RutaId == id).ForEachAsync(c => c.AsignarRuta(null), ct);
             await db.SaveChangesAsync(ct);
             return Results.NoContent();
-        });
+        }).RequireAuthorization(Permisos.GestionarRutas);
     }
 
     private static RutaDto ADto(Ruta r) =>
