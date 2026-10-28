@@ -6,11 +6,7 @@ import type { Punto, Ruta } from "@aguialarmas/shared";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef } from "react";
-
-// Ibagué. Mientras no esté la cuenta de Azure Maps (RT-07) se usan los mapas de OpenStreetMap.
-const CENTRO: L.LatLngTuple = [4.4389, -75.2322];
-const TILES = import.meta.env.VITE_MAPA_TILES ?? "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-const ATRIBUCION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+import { CAPAS_BASE, CENTRO_MAPA, capaGuardada, guardarCapa, LIMITES_MAPA, ZOOM_MINIMO } from "@/lib/mapa";
 
 export interface Borrador {
   /** Cambia cuando empieza otro borrador (nueva ruta o editar otra); recrea la capa editable. */
@@ -60,8 +56,30 @@ export function MapaRutas(props: Props) {
   });
 
   useEffect(() => {
-    const m = L.map(contenedor.current!, { center: CENTRO, zoom: 13 });
-    L.tileLayer(TILES, { attribution: ATRIBUCION, maxZoom: 19 }).addTo(m);
+    const m = L.map(contenedor.current!, {
+      center: CENTRO_MAPA,
+      zoom: 13,
+      minZoom: ZOOM_MINIMO,
+      maxZoom: 19,
+      maxBounds: LIMITES_MAPA,
+      maxBoundsViscosity: 1,
+    });
+
+    // Selector Calles / Relieve / Satélite; se recuerda la última elección.
+    const inicial = capaGuardada();
+    const capas: Record<string, L.TileLayer> = {};
+    for (const c of CAPAS_BASE) {
+      const capa = L.tileLayer(c.url, {
+        attribution: c.atribucion,
+        maxNativeZoom: c.zoomMaximo,
+        maxZoom: 19,
+      });
+      capa.on("add", () => guardarCapa(c.id));
+      capas[c.nombre] = capa;
+      if (c.id === inicial) capa.addTo(m);
+    }
+    L.control.layers(capas, undefined, { position: "topright", collapsed: false }).addTo(m);
+
     m.pm.setLang("es");
     m.pm.setGlobalOptions({ snappable: true, snapDistance: 15, allowSelfIntersection: false });
     m.on("pm:create", (e) => {

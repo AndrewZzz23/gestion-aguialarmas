@@ -148,3 +148,21 @@
 .leaflet-tooltip.etiqueta-ruta::before {
   display: none;
 }
+
+/* Selector de capas del mapa (Calles / Relieve / Satélite) */
+.leaflet-control-layers {
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.15) !important;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 4px 10px 4px 6px;
+}
+.leaflet-control-layers-base label {
+  cursor: pointer;
+  margin: 3px 0;
+}
+.leaflet-control-layers-selector {
+  accent-color: var(--marca-negro);
+}
