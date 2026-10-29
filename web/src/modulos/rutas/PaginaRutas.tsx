@@ -1,4 +1,4 @@
-import { coloresRutas, GuardarRuta, type Punto, type Ruta } from "@aguialarmas/shared";
+import { coloresRutas, GuardarRuta, puede, type Punto, type Ruta } from "@aguialarmas/shared";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, MapPinned, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
@@ -18,6 +18,7 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/lib/api";
+import { useSesion } from "@/lib/sesion";
 import { MapaRutas, type Borrador } from "./MapaRutas";
 import { recortarContraVecinas } from "./recortar";
 
@@ -32,6 +33,7 @@ const claveRutas = ["rutas"];
 export function PaginaRutas() {
   const queryClient = useQueryClient();
   const rutas = useQuery({ queryKey: claveRutas, queryFn: api.rutas });
+  const puedeGestionar = puede(useSesion((s) => s.usuario?.rol), "rutas.gestionar");
   const [modo, setModo] = useState<Modo>({ tipo: "ver" });
   const [seleccionadaId, setSeleccionadaId] = useState<string | null>(null);
   const [porInactivar, setPorInactivar] = useState<Ruta | null>(null);
@@ -136,9 +138,11 @@ export function PaginaRutas() {
               <CardDescription>Áreas de Ibagué que agrupan las cuentas. Cada cuenta queda en la ruta que contiene su ubicación.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-              <Button onClick={() => { setSeleccionadaId(null); setModo({ tipo: "dibujar" }); }}>
-                <Plus data-icon="inline-start" /> Nueva ruta
-              </Button>
+              {puedeGestionar && (
+                <Button onClick={() => { setSeleccionadaId(null); setModo({ tipo: "dibujar" }); }}>
+                  <Plus data-icon="inline-start" /> Nueva ruta
+                </Button>
+              )}
 
               {rutas.isPending && <Skeleton className="h-24" />}
               {rutas.isError && <p className="text-sm text-destructive">{rutas.error.message}</p>}
@@ -165,7 +169,7 @@ export function PaginaRutas() {
                 ))}
               </ul>
 
-              {seleccionada && (
+              {seleccionada && puedeGestionar && (
                 <div className="flex gap-2 border-t pt-4">
                   <Button variant="outline" className="flex-1" onClick={() => editar(seleccionada)}>
                     <Pencil data-icon="inline-start" /> Editar

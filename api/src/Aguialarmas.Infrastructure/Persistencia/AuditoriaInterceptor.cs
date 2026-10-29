@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 using Aguialarmas.Application.Abstracciones;
 using Aguialarmas.Domain.Auditoria;
@@ -87,6 +88,12 @@ public sealed class AuditoriaInterceptor(IUsuarioActual usuario, TimeProvider re
         {
             if (soloModificados && !propiedad.IsModified)
             {
+                continue;
+            }
+
+            if (propiedad.Metadata.PropertyInfo?.GetCustomAttribute<DatoSensibleAttribute>() is not null)
+            {
+                datos[propiedad.Metadata.Name] = "***";
                 continue;
             }
 

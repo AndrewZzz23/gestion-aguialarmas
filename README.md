@@ -51,6 +51,9 @@ pnpm dev:mobile
 | Web | http://localhost:5173 |
 | Correos de prueba | http://localhost:8025 |
 | SQL Server | `localhost,1433` · usuario `sa` · clave en `docker/.env` (por defecto `Aguia_Dev_2026!`) |
+| Primer ingreso a la web | `admin@aguialarmas.local` · `Aguia2026` (se crea solo si la base no tiene usuarios; ver `AdminInicial` en `appsettings.Development.json`) |
+
+Al crear un usuario, el correo para definir su contraseña llega a Mailpit (http://localhost:8025).
 
 ## Reglas que aplican a todo el código
 

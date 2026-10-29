@@ -20,7 +20,7 @@ Cada entregable va a ambiente de pruebas → 5 días hábiles de validación del
 ## Fase 1 — siguientes tareas
 - [ ] Cerrar los pendientes de [pendientes-fase-1.md](pendientes-fase-1.md) con el cliente
 - [ ] Modelo de datos completo en código (ver [modelo-datos.md](modelo-datos.md))
-- [ ] Autenticación y roles (WA-01, WA-02, WA-03): JWT emitido por la API
+- [x] Autenticación y roles (WA-01, WA-02, WA-03): JWT emitido por la API (ver decisiones/0003)
 - [x] Identidad visual y librería de componentes (web y app)
 - [ ] Bocetos ajustados: ruta, capacidades, inventario por bodegas, GPS por acción
 - [ ] Plantillas Excel de carga masiva (WA-32)
@@ -28,7 +28,7 @@ Cada entregable va a ambiente de pruebas → 5 días hábiles de validación del
 ## Backlog por entregable
 
 ### E1 · Web de órdenes
-- [ ] Usuarios, roles y login con recuperación de contraseña (WA-01–03)
+- [x] Usuarios, roles y login con recuperación de contraseña (WA-01–03) — falta el login de la app (AM-01)
 - [ ] Consulta de auditoría con filtros y exportación (WA-04)
 - [ ] Clientes, cuentas, clasificaciones, planos y zonas (WA-05–09)
 - [ ] Plantillas (WA-10) y rutas dibujadas en el mapa (WA-28)
