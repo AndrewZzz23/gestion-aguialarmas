@@ -17,3 +17,9 @@ export type Permiso = keyof typeof permisos;
 export function puede(rol: Rol | undefined, permiso: Permiso): boolean {
   return rol !== undefined && (permisos[permiso] as readonly Rol[]).includes(rol);
 }
+
+/**
+ * Roles que usan la app Android: técnico y supervisor (AM-01) y almacenista (AL-16).
+ * Los demás roles trabajan en la web.
+ */
+export const rolesApp: readonly Rol[] = ["Tecnico", "Supervisor", "Almacenista"];

@@ -1,21 +1,33 @@
-import { colores, EstadoOrden } from "@aguialarmas/shared";
+import { colores, EstadoOrden, nombresRol } from "@aguialarmas/shared";
 import { useQuery } from "@tanstack/react-query";
 import { Stack } from "expo-router";
-import { ActivityIndicator, Image, ScrollView, StyleSheet, View } from "react-native";
-import { Boton, Campo, InsigniaEstadoOrden, Tarjeta, Texto } from "../componentes";
-import { api } from "../lib/api";
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Boton, Campo, familia, InsigniaEstadoOrden, Tarjeta, Texto } from "../../componentes";
+import { api } from "../../lib/api";
+import { cerrarSesion, useSesion } from "../../lib/sesion";
 
 export default function Inicio() {
+  const usuario = useSesion((s) => s.usuario)!;
   const estado = useQuery({ queryKey: ["estado"], queryFn: api.estado });
 
   return (
     <ScrollView contentContainerStyle={estilos.contenedor}>
-      <Stack.Screen options={{ title: "Aguialarmas" }} />
+      <Stack.Screen
+        options={{
+          title: "Aguialarmas",
+          headerRight: () => (
+            <Pressable onPress={cerrarSesion} hitSlop={12} accessibilityRole="button">
+              <Texto style={estilos.salir}>Salir</Texto>
+            </Pressable>
+          ),
+        }}
+      />
 
       <View style={estilos.encabezado}>
-        <Image source={require("../../assets/aguila.png")} style={estilos.aguila} resizeMode="contain" />
+        <Image source={require("../../../assets/aguila.png")} style={estilos.aguila} resizeMode="contain" />
         <View>
-          <Texto variante="titulo">App del técnico</Texto>
+          <Texto variante="titulo">Hola, {usuario.nombre.split(" ")[0]}</Texto>
+          <Texto variante="secundario">{nombresRol[usuario.rol]}</Texto>
           {estado.isPending && <ActivityIndicator color={colores.negro} />}
           {estado.isError && (
             <Texto variante="secundario" style={{ color: colores.aviso }}>
@@ -59,4 +71,5 @@ const estilos = StyleSheet.create({
   encabezado: { flexDirection: "row", alignItems: "center", gap: 12 },
   aguila: { width: 56, height: 56 },
   fila: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  salir: { color: colores.amarillo, fontFamily: familia.seminegrilla },
 });
