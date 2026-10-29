@@ -12,12 +12,16 @@ public static class Permisos
     public const string GestionarUsuarios = "usuarios.gestionar";
     public const string VerRutas = "rutas.ver";
     public const string GestionarRutas = "rutas.gestionar";
+    public const string VerClientes = "clientes.ver";
+    public const string GestionarClientes = "clientes.gestionar";
 
     private static readonly Dictionary<string, Rol[]> Roles = new()
     {
         [GestionarUsuarios] = [Rol.Administrador],
         [VerRutas] = [Rol.Administrador, Rol.UsuarioAdministrativo, Rol.DirectorTecnico, Rol.Supervisor],
         [GestionarRutas] = [Rol.Administrador, Rol.UsuarioAdministrativo],
+        [VerClientes] = [Rol.Administrador, Rol.UsuarioAdministrativo, Rol.DirectorTecnico, Rol.Supervisor],
+        [GestionarClientes] = [Rol.Administrador, Rol.UsuarioAdministrativo],
     };
 
     public static void Registrar(AuthorizationOptions opciones)

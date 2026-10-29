@@ -15,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PaginaIngresar } from "@/modulos/autenticacion/PaginaIngresar";
+import { PaginaCliente } from "@/modulos/clientes/PaginaCliente";
+import { PaginaClientes } from "@/modulos/clientes/PaginaClientes";
 import { PaginaRecuperar } from "@/modulos/autenticacion/PaginaRecuperar";
 import { PaginaRestablecer } from "@/modulos/autenticacion/PaginaRestablecer";
 import { GuiaEstilos } from "@/modulos/estilos/GuiaEstilos";
@@ -52,6 +54,7 @@ function Inicio() {
 /** Menú principal. Cada enlace aparece solo si el rol tiene el permiso (WA-03). */
 const menu: { a: string; texto: string; permiso?: Permiso }[] = [
   { a: "/", texto: "Inicio" },
+  { a: "/clientes", texto: "Clientes", permiso: "clientes.ver" },
   { a: "/rutas", texto: "Rutas", permiso: "rutas.ver" },
   { a: "/usuarios", texto: "Usuarios", permiso: "usuarios.gestionar" },
   { a: "/estilos", texto: "Estilos" },
@@ -158,6 +161,8 @@ export default function App() {
       <Route path="/restablecer" element={<PaginaRestablecer />} />
       <Route element={<ConSesion />}>
         <Route path="/" element={<Inicio />} />
+        <Route path="/clientes" element={<ConPermiso permiso="clientes.ver"><PaginaClientes /></ConPermiso>} />
+        <Route path="/clientes/:id" element={<ConPermiso permiso="clientes.ver"><PaginaCliente /></ConPermiso>} />
         <Route path="/rutas" element={<ConPermiso permiso="rutas.ver"><PaginaRutas /></ConPermiso>} />
         <Route path="/usuarios" element={<ConPermiso permiso="usuarios.gestionar"><PaginaUsuarios /></ConPermiso>} />
         <Route path="/estilos" element={<GuiaEstilos />} />

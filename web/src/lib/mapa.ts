@@ -1,4 +1,6 @@
+import * as L from "leaflet";
 import type { LatLngBoundsExpression, LatLngTuple } from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 /** Ibagué. */
 export const CENTRO_MAPA: LatLngTuple = [4.4389, -75.2322];
@@ -71,3 +73,29 @@ export function guardarCapa(id: CapaBase["id"]) {
     // Sin almacenamiento (modo privado): simplemente no se recuerda.
   }
 }
+
+/** Mapa de Ibagué con sus límites y el selector Calles / Relieve / Satélite. Lo usan todos los mapas de la web. */
+export function crearMapaBase(contenedor: HTMLElement): L.Map {
+  const mapa = L.map(contenedor, {
+    center: CENTRO_MAPA,
+    zoom: 13,
+    minZoom: ZOOM_MINIMO,
+    maxZoom: 19,
+    maxBounds: LIMITES_MAPA,
+    maxBoundsViscosity: 1,
+  });
+
+  const inicial = capaGuardada();
+  const capas: Record<string, L.TileLayer> = {};
+  for (const c of CAPAS_BASE) {
+    const capa = L.tileLayer(c.url, { attribution: c.atribucion, maxNativeZoom: c.zoomMaximo, maxZoom: 19 });
+    capa.on("add", () => guardarCapa(c.id));
+    capas[c.nombre] = capa;
+    if (c.id === inicial) capa.addTo(mapa);
+  }
+  L.control.layers(capas, undefined, { position: "topright", collapsed: false }).addTo(mapa);
+  return mapa;
+}
+
+/** La API usa [longitud, latitud] (GeoJSON); Leaflet usa [latitud, longitud]. */
+export const aLatLng = ([lng, lat]: readonly [number, number]): LatLngTuple => [lat, lng];

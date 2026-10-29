@@ -6,6 +6,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       theme="light"
+      richColors
       className="toaster group"
       icons={{
         success: (
@@ -30,6 +31,19 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-text": "var(--popover-foreground)",
           "--normal-border": "var(--border)",
           "--border-radius": "var(--radius)",
+          // Colores por tipo con la paleta del sistema (richColors). El error va en naranja, nunca en rojo.
+          "--success-bg": "var(--exito-fondo)",
+          "--success-text": "var(--exito)",
+          "--success-border": "color-mix(in srgb, var(--exito) 30%, transparent)",
+          "--warning-bg": "var(--aviso-fondo)",
+          "--warning-text": "var(--aviso)",
+          "--warning-border": "color-mix(in srgb, var(--aviso) 30%, transparent)",
+          "--info-bg": "var(--info-fondo)",
+          "--info-text": "var(--info)",
+          "--info-border": "color-mix(in srgb, var(--info) 30%, transparent)",
+          "--error-bg": "var(--peligro-fondo)",
+          "--error-text": "var(--destructive)",
+          "--error-border": "color-mix(in srgb, var(--destructive) 30%, transparent)",
         } as React.CSSProperties
       }
       toastOptions={{

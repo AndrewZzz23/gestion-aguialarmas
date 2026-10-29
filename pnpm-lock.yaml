@@ -108,6 +108,9 @@ importers:
       '@turf/area':
         specifier: ^7.4.0
         version: 7.4.0
+      '@turf/boolean-point-in-polygon':
+        specifier: ^7.4.0
+        version: 7.4.0
       '@turf/difference':
         specifier: ^7.4.0
         version: 7.4.0

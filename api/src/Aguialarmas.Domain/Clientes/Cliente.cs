@@ -2,10 +2,12 @@ using Aguialarmas.Domain.Comun;
 
 namespace Aguialarmas.Domain.Clientes;
 
-/// <summary>Cliente final de Aguialarmas. Tiene una o varias cuentas (sedes).</summary>
+/// <summary>Cliente final de Aguialarmas. Tiene una o varias cuentas (sedes). WA-05.</summary>
 public sealed class Cliente : Entidad
 {
     public string Nombre { get; private set; } = string.Empty;
+
+    /// <summary>NIT o cédula. Opcional, pero si se escribe no se puede repetir.</summary>
     public string? Identificacion { get; private set; }
 
     private readonly List<Cuenta> _cuentas = [];
@@ -22,10 +24,10 @@ public sealed class Cliente : Entidad
     {
         if (string.IsNullOrWhiteSpace(nombre))
         {
-            throw new ArgumentException("El nombre del cliente es obligatorio.", nameof(nombre));
+            throw new ExcepcionDominio("El nombre del cliente es obligatorio.");
         }
 
         Nombre = nombre.Trim();
-        Identificacion = identificacion?.Trim();
+        Identificacion = string.IsNullOrWhiteSpace(identificacion) ? null : identificacion.Trim();
     }
 }

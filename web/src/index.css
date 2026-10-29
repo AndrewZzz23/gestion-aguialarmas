@@ -166,3 +166,22 @@
 .leaflet-control-layers-selector {
   accent-color: var(--marca-negro);
 }
+
+.leaflet-tooltip.etiqueta-ruta-tenue {
+  background: rgb(255 255 255 / 0.6);
+  box-shadow: none;
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+}
+
+/* Pin para ubicar una cuenta en el mapa */
+.pin-cuenta {
+  width: 28px;
+  height: 28px;
+  background: var(--marca-amarillo);
+  border: 3px solid var(--marca-negro);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.35);
+  cursor: grab;
+}

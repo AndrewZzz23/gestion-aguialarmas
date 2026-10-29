@@ -8,6 +8,8 @@ export const permisos = {
   "usuarios.gestionar": ["Administrador"],
   "rutas.ver": ["Administrador", "UsuarioAdministrativo", "DirectorTecnico", "Supervisor"],
   "rutas.gestionar": ["Administrador", "UsuarioAdministrativo"],
+  "clientes.ver": ["Administrador", "UsuarioAdministrativo", "DirectorTecnico", "Supervisor"],
+  "clientes.gestionar": ["Administrador", "UsuarioAdministrativo"],
 } as const satisfies Record<string, readonly Rol[]>;
 
 export type Permiso = keyof typeof permisos;

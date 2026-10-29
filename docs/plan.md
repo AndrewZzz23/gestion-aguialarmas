@@ -30,7 +30,8 @@ Cada entregable va a ambiente de pruebas → 5 días hábiles de validación del
 ### E1 · Web de órdenes
 - [x] Usuarios, roles y login con recuperación de contraseña (WA-01–03) — falta el login de la app (AM-01)
 - [ ] Consulta de auditoría con filtros y exportación (WA-04)
-- [ ] Clientes, cuentas, clasificaciones, planos y zonas (WA-05–09)
+- [x] Clientes y cuentas con ubicación, perímetro y ruta automática (WA-05, WA-06)
+- [ ] Clasificaciones, planos y zonas (WA-07–09); luego la clasificación en la cuenta (WA-06)
 - [ ] Plantillas (WA-10) y rutas dibujadas en el mapa (WA-28)
 - [ ] Listas configurables y carga desde Excel (WA-29, WA-32)
 - [ ] Órdenes: creación, clasificación, estados, prioridad y duplicados (WA-12–16)
