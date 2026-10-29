@@ -1,5 +1,17 @@
 import { z } from "zod";
-import { EstadoApi, Ruta, Sesion, Usuario, type GuardarRuta, type GuardarUsuario } from "./modelos";
+import {
+  Cliente,
+  ClienteResumen,
+  Cuenta,
+  EstadoApi,
+  Ruta,
+  Sesion,
+  Usuario,
+  type GuardarCliente,
+  type GuardarCuenta,
+  type GuardarRuta,
+  type GuardarUsuario,
+} from "./modelos";
 
 export class ErrorApi extends Error {
   readonly estado: number;
@@ -93,6 +105,24 @@ export function crearClienteApi({ urlBase, obtenerToken, renovarSesion }: Opcion
     crearRuta: (datos: GuardarRuta) => pedir(Ruta, "/api/rutas", enviar("POST", datos)),
     actualizarRuta: (id: string, datos: GuardarRuta) => pedir(Ruta, `/api/rutas/${id}`, enviar("PUT", datos)),
     inactivarRuta: (id: string) => pedir(SinContenido, `/api/rutas/${id}/inactivar`, enviar("POST")),
+
+    // Clientes y cuentas (WA-05, WA-06)
+    clientes: (filtro: { buscar?: string; incluirInactivos?: boolean } = {}) => {
+      const q = new URLSearchParams();
+      if (filtro.buscar) q.set("buscar", filtro.buscar);
+      if (filtro.incluirInactivos) q.set("incluirInactivos", "true");
+      return pedir(ClienteResumen.array(), `/api/clientes${q.size ? `?${q}` : ""}`);
+    },
+    cliente: (id: string) => pedir(Cliente, `/api/clientes/${id}`),
+    crearCliente: (datos: GuardarCliente) => pedir(Cliente, "/api/clientes", enviar("POST", datos)),
+    actualizarCliente: (id: string, datos: GuardarCliente) => pedir(Cliente, `/api/clientes/${id}`, enviar("PUT", datos)),
+    inactivarCliente: (id: string) => pedir(SinContenido, `/api/clientes/${id}/inactivar`, enviar("POST")),
+    reactivarCliente: (id: string) => pedir(SinContenido, `/api/clientes/${id}/reactivar`, enviar("POST")),
+    cuentas: () => pedir(Cuenta.array(), "/api/cuentas"),
+    crearCuenta: (clienteId: string, datos: GuardarCuenta) => pedir(Cuenta, `/api/clientes/${clienteId}/cuentas`, enviar("POST", datos)),
+    actualizarCuenta: (id: string, datos: GuardarCuenta) => pedir(Cuenta, `/api/cuentas/${id}`, enviar("PUT", datos)),
+    inactivarCuenta: (id: string) => pedir(SinContenido, `/api/cuentas/${id}/inactivar`, enviar("POST")),
+    reactivarCuenta: (id: string) => pedir(SinContenido, `/api/cuentas/${id}/reactivar`, enviar("POST")),
   };
 }
 

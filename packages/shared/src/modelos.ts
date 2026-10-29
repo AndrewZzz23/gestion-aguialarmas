@@ -108,3 +108,54 @@ export const nombresRol: Record<Rol, string> = {
   Tecnico: "Técnico",
   Supervisor: "Supervisor",
 };
+
+/** Sede de un cliente (WA-06). */
+export const Cuenta = z.object({
+  id: z.uuid(),
+  clienteId: z.uuid(),
+  nombre: z.string(),
+  direccion: z.string(),
+  contacto: z.string().nullable(),
+  correoContacto: z.string().nullable(),
+  ubicacion: Punto.nullable(),
+  radioLlegadaM: z.number().int(),
+  rutaId: z.uuid().nullable(),
+  rutaNombre: z.string().nullable(),
+  activo: z.boolean(),
+});
+export type Cuenta = z.infer<typeof Cuenta>;
+
+export const GuardarCuenta = z.object({
+  nombre: z.string().trim().min(1, "Escribe el nombre de la cuenta").max(200),
+  direccion: z.string().trim().min(1, "Escribe la dirección").max(250),
+  contacto: z.string().trim().max(150).nullable(),
+  correoContacto: z.union([z.email("El correo de contacto no es válido"), z.literal("")]).nullable(),
+  ubicacion: Punto.nullable(),
+  radioLlegadaM: z.number().int().min(20, "El perímetro mínimo es 20 m").max(1000, "El perímetro máximo es 1000 m"),
+});
+export type GuardarCuenta = z.infer<typeof GuardarCuenta>;
+
+/** Cliente final de Aguialarmas (WA-05). */
+export const ClienteResumen = z.object({
+  id: z.uuid(),
+  nombre: z.string(),
+  identificacion: z.string().nullable(),
+  activo: z.boolean(),
+  cuentasActivas: z.number().int(),
+});
+export type ClienteResumen = z.infer<typeof ClienteResumen>;
+
+export const Cliente = z.object({
+  id: z.uuid(),
+  nombre: z.string(),
+  identificacion: z.string().nullable(),
+  activo: z.boolean(),
+  cuentas: z.array(Cuenta),
+});
+export type Cliente = z.infer<typeof Cliente>;
+
+export const GuardarCliente = z.object({
+  nombre: z.string().trim().min(1, "Escribe el nombre del cliente").max(200),
+  identificacion: z.string().trim().max(30).nullable(),
+});
+export type GuardarCliente = z.infer<typeof GuardarCliente>;

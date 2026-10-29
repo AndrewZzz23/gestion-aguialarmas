@@ -67,6 +67,7 @@ app.MapGet("/api/estado", (TimeProvider reloj) => new
 app.MapAutenticacion();
 app.MapUsuarios();
 app.MapRutas();
+app.MapClientes();
 
 await AdminInicial.CrearSiNoHayUsuariosAsync(app.Services);
 
