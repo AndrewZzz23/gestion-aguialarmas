@@ -1,13 +1,14 @@
+using Aguialarmas.Api.Endpoints;
+using Aguialarmas.Api.Errores;
 using Aguialarmas.Api.Seguridad;
 using Aguialarmas.Application.Abstracciones;
 using Aguialarmas.Infrastructure;
-using Aguialarmas.Infrastructure.Persistencia;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ManejadorErroresDominio>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUsuarioActual, UsuarioActualHttp>();
 builder.Services.AddInfraestructura(builder.Configuration);
@@ -34,12 +35,7 @@ app.MapGet("/api/estado", (TimeProvider reloj) => new
     horaUtc = reloj.GetUtcNow(),
 });
 
-app.MapGet("/api/rutas", async (AppDbContext db, CancellationToken ct) =>
-    await db.Rutas
-        .Where(r => r.Activo)
-        .OrderBy(r => r.Nombre)
-        .Select(r => new { r.Id, r.Nombre, r.Color })
-        .ToListAsync(ct));
+app.MapRutas();
 
 app.Run();
 

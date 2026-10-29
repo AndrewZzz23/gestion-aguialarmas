@@ -32,14 +32,16 @@ pnpm install
 # 3. API (http://localhost:5080)
 cd api
 dotnet restore
-dotnet ef migrations add Inicial -p src/Aguialarmas.Infrastructure -s src/Aguialarmas.Api -o Persistencia/Migraciones
 dotnet ef database update -p src/Aguialarmas.Infrastructure -s src/Aguialarmas.Api
 dotnet run --project src/Aguialarmas.Api
+# Para probar la app en el celular, la API debe escuchar en la red local:
+# dotnet run --project src/Aguialarmas.Api --launch-profile red
 
 # 4. Web (http://localhost:5173), en otra terminal
 pnpm dev:web
 
-# 5. App, en otra terminal: copia mobile/.env.example a mobile/.env con la IP de tu PC
+# 5. App, en otra terminal: copia mobile/.env.example a mobile/.env.local con la IP de tu PC
+#    (ipconfig → "Dirección IPv4" del Wi-Fi). Abre Expo Go en el celular y escanea el QR.
 pnpm dev:mobile
 ```
 

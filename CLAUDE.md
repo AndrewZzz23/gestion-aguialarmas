@@ -28,7 +28,8 @@ Reglas aún sin definir por el cliente: `docs/pendientes-fase-1.md`. Si un requi
 - Configuración EF en `Infrastructure/Persistencia/Configuraciones.cs` (o un archivo por módulo cuando crezca).
 - TypeScript estricto. Los tipos que comparten web y app van en `packages/shared` con Zod.
 - Mobile: instalar librerías con `npx expo install` para respetar versiones del SDK.
-- Colores de la marca: azul noche `#14243A`, azul `#1F4E79`, azul claro `#8FB3D9`, fondo `#F3F5F8`. Sin texto rojo en la interfaz.
+- Identidad visual (ver `docs/decisiones/0002-identidad-visual.md`): negro `#141414`, amarillo `#FFD200` (acción principal, con texto negro; nunca como texto sobre blanco), fondo `#F5F5F4`, Montserrat. El rojo es solo del logo: sin texto rojo en la interfaz; errores en naranja `#C2410C`, avisos en ámbar `#B45309`. Tokens en `packages/shared/src/tema.ts`.
+- Web: componentes shadcn/ui en `web/src/components/ui/` (agregar con `pnpm dlx shadcn@latest add <componente>`) y Tailwind; referencia visual en la ruta `/estilos`. App: componentes en `mobile/src/componentes/`.
 - Ramas `feature/<ID>-<descripcion>` desde `develop`; commits y PRs citan el ID del requisito.
 - Al terminar una tarea, marca la casilla correspondiente en `docs/plan.md`.
 
