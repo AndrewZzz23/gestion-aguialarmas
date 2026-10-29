@@ -240,6 +240,12 @@ export function GuiaEstilos() {
             <Button variant="outline" onClick={() => toast.warning("La orden ya existía: se agregó una nota")}>
               Notificación de aviso
             </Button>
+            <Button variant="outline" onClick={() => toast.info("Carlos Ruiz marcó llegada a Éxito Calle 60")}>
+              Notificación de información
+            </Button>
+            <Button variant="outline" onClick={() => toast.error("La ruta se cruza con \"Centro\"")}>
+              Notificación de error
+            </Button>
             <Badge variant="outline">Las notificaciones salen abajo a la derecha</Badge>
           </div>
         </div>
